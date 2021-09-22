@@ -70,3 +70,11 @@ C:\personal-projects\CursoEfAvancado\bin\Debug\net5.0\Humanizer.dll
 C:\personal-projects\CursoEfAvancado\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\personal-projects\CursoEfAvancado\bin\Debug\net5.0\Castle.Core.dll
 C:\personal-projects\CursoEfAvancado\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.csproj.AssemblyReference.cache
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.AssemblyInfoInputs.cache
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.AssemblyInfo.cs
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.csproj.CoreCompileInputs.cache
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.dll
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\ref\DominandoEFCore.dll
+C:\Users\phenr\OneDrive\Documentos\projetos\CursoEfAvancado\obj\Debug\net5.0\DominandoEFCore.pdb

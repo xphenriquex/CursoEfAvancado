@@ -1,5 +1,5 @@
 using System;
-using DominandoEFCore.Domain;
+using CursoEfAvancado.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,13 +12,16 @@ namespace CursoEfAvancado.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string strConnection="Data Source=localhost\\SQLEXPRESS;Database=CursoEFCoreAvancado;Integrated Security=true;pooling=true;";
+            const string strConnection="Data Source=localhost\\SQLEXPRESS;Database=DevIO-02;Integrated Security=true;pooling=true;";
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .EnableSensitiveDataLogging()
-                //.UseLazyLoadingProxies()
-                .LogTo(Console.WriteLine, LogLevel.Information)
-                ;
+                .LogTo(Console.WriteLine, LogLevel.Information);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Departamento>().HasQueryFilter(p=>!p.Excluido);
         }
     }
 }

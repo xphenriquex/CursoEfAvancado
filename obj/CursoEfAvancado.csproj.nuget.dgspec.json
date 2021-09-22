@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\DominandoEFCore.csproj": {}
+    "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\CursoEfAvancado.csproj": {}
   },
   "projects": {
-    "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\DominandoEFCore.csproj": {
+    "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\CursoEfAvancado.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\DominandoEFCore.csproj",
-        "projectName": "DominandoEFCore",
-        "projectPath": "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\DominandoEFCore.csproj",
+        "projectUniqueName": "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\CursoEfAvancado.csproj",
+        "projectName": "CursoEfAvancado",
+        "projectPath": "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\CursoEfAvancado.csproj",
         "packagesPath": "C:\\Users\\phenr\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\phenr\\OneDrive\\Documentos\\projetos\\CursoEfAvancado\\obj\\",
         "projectStyle": "PackageReference",

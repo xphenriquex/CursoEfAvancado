@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("DominandoEFCore")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("CursoEfAvancado")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("DominandoEFCore")]
-[assembly: System.Reflection.AssemblyTitleAttribute("DominandoEFCore")]
+[assembly: System.Reflection.AssemblyProductAttribute("CursoEfAvancado")]
+[assembly: System.Reflection.AssemblyTitleAttribute("CursoEfAvancado")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
