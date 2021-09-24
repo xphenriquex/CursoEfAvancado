@@ -15,9 +15,23 @@ namespace CursoEfAvancado
         {
             using var db = new ApplicationContext();
             //Setup(db);
-            FiltroGlobal();
+            //FiltroGlobal();
+            IgnoreFiltroGlobal();
         }
 
+        static void IgnoreFiltroGlobal()
+        {
+            using var db = new CursoEfAvancado.Data.ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos.IgnoreQueryFilters().Where(p => p.Id > 0).ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descrição: {departamento.Descricao} \t Excluido: {departamento.Excluido}");
+            }
+        }
+        
         static void FiltroGlobal()
         {
             using var db = new CursoEfAvancado.Data.ApplicationContext();
