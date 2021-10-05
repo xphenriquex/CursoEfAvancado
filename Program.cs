@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CursoEfAvancado.Data;
 using CursoEfAvancado.Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -16,7 +17,67 @@ namespace CursoEfAvancado
             using var db = new ApplicationContext();
             //Setup(db);
             //FiltroGlobal();
-            IgnoreFiltroGlobal();
+            //IgnoreFiltroGlobal();
+            //ConsultaProjetada();
+            //ConsultaParametrizada();
+            ConsultaInterpolada();
+        }
+
+        static void ConsultaInterpolada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var id = 1;
+            var departamentos = db.Departamentos
+                .FromSqlInterpolated($"SELECT * FROM Departamentos WHERE Id>{id}")
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descrição: {departamento.Descricao}");
+            }
+        }
+        static void ConsultaParametrizada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var id = new SqlParameter
+            {
+                Value = 1,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var departamentos = db.Departamentos
+                .FromSqlRaw("SELECT * FROM Departamentos WHERE Id>{0}", id)
+                .Where(p => !p.Excluido)
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descrição: {departamento.Descricao}");
+            }
+        }
+
+        static void ConsultaProjetada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos
+                .Where(p => p.Id > 0)
+                .Select(p => new { p.Descricao, Funcionarios = p.Funcionarios.Select(f => f.Nome) })
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descrição: {departamento.Descricao}");
+
+                foreach (var funcionario in departamento.Funcionarios)
+                {
+                    Console.WriteLine($"\t Nome: {funcionario}");
+                }
+            }
         }
 
         static void IgnoreFiltroGlobal()
