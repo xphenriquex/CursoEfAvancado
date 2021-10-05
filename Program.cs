@@ -20,7 +20,26 @@ namespace CursoEfAvancado
             //IgnoreFiltroGlobal();
             //ConsultaProjetada();
             //ConsultaParametrizada();
-            ConsultaInterpolada();
+            //ConsultaInterpolada();
+            ConsultaComTAG();
+        }
+
+        static void ConsultaComTAG()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos
+                .TagWith(@"Estou enviando um comentario para o servidor
+                
+                Segundo comentario
+                Terceiro comentario")
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descrição: {departamento.Descricao}");
+            }
         }
 
         static void ConsultaInterpolada()
