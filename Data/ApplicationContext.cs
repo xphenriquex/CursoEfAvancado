@@ -1,6 +1,7 @@
 using System;
 using CursoEfAvancado.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace CursoEfAvancado.Data
@@ -14,15 +15,15 @@ namespace CursoEfAvancado.Data
         {
             const string strConnection="Data Source=localhost\\SQLEXPRESS;Database=DevIO-02;Integrated Security=true;pooling=true;";
             optionsBuilder
-                .UseSqlServer(strConnection)
-                .EnableSensitiveDataLogging()
-                //.UseSqlServer(strConnection,p=>p.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-                .LogTo(Console.WriteLine, LogLevel.Information);
+            .UseSqlServer(strConnection)
+            //.LogTo(Console.WriteLine, LogLevel.Information)
+            .LogTo(Console.WriteLine, 
+                new [] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+                LogLevel.Information,
+                DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
+            )
+            ;
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Departamento>().HasQueryFilter(p=>!p.Excluido);
-        }
     }
 }
