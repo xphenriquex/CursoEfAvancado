@@ -17,7 +17,12 @@ namespace CursoEfAvancado.Data
         {
             const string strConnection="Data Source=localhost\\SQLEXPRESS;Database=DevIO-02;Integrated Security=true;pooling=true;";
             optionsBuilder
-            .UseSqlServer(strConnection, o => o.MaxBatchSize(100).CommandTimeout(5))
+            .UseSqlServer(
+                strConnection, 
+                    o=> o
+                        .MaxBatchSize(100)
+                        .CommandTimeout(5)
+                        .EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null))
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
         }

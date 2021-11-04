@@ -15,10 +15,29 @@ namespace CursoEfAvancado
         static void Main(string[] args)
         {
             using var db = new ApplicationContext();
-            TempoComandoGeral();
+            
+            ExecutarEstrategiaResiliencia();
+            //TempoComandoGeral();
             //HabilitandoBatchSize();
             //DadosSensiveis();
             //ConsultarDepartamentos();
+        }
+
+        static void ExecutarEstrategiaResiliencia()
+        {
+            using var db = new ApplicationContext();
+
+            var strategy = db.Database.CreateExecutionStrategy();
+            strategy.Execute(()=>
+            {
+                using var transaction = db.Database.BeginTransaction();
+
+                db.Departamentos.Add(new Departamento { Descricao = "Departamento Transacao"});
+                db.SaveChanges();
+
+                transaction.Commit();
+            });
+
         }
 
         static void TempoComandoGeral()
