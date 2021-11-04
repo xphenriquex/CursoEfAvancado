@@ -15,8 +15,27 @@ namespace CursoEfAvancado
         static void Main(string[] args)
         {
             using var db = new ApplicationContext();
-            DadosSensiveis();
+            HabilitandoBatchSize();
+            //DadosSensiveis();
             //ConsultarDepartamentos();
+        }
+
+        static void HabilitandoBatchSize()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            for (var i = 0; i < 50; i++)
+            {
+                db.Departamentos.Add(
+                    new Departamento
+                    {
+                        Descricao = "Departamento " + i
+                    });
+            }
+
+            db.SaveChanges();
         }
 
          static void DadosSensiveis()
