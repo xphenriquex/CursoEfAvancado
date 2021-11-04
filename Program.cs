@@ -15,7 +15,16 @@ namespace CursoEfAvancado
         static void Main(string[] args)
         {
             using var db = new ApplicationContext();
-            ConsultarDepartamentos();
+            DadosSensiveis();
+            //ConsultarDepartamentos();
+        }
+
+         static void DadosSensiveis()
+        {
+            using var db = new ApplicationContext();
+
+            var descricao = "Departamento";
+            var departamentos = db.Departamentos.Where(p => p.Descricao == descricao).ToArray();
         }
 
         static void ConsultarDepartamentos()

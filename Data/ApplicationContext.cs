@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using CursoEfAvancado.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,6 +9,7 @@ namespace CursoEfAvancado.Data
 {
     public class ApplicationContext : DbContext
     {
+        //private readonly StreamWriter _writer = new StreamWriter("meu_log_do_ef_core.txt", append: true);
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
 
@@ -17,12 +19,19 @@ namespace CursoEfAvancado.Data
             optionsBuilder
             .UseSqlServer(strConnection)
             //.LogTo(Console.WriteLine, LogLevel.Information)
-            .LogTo(Console.WriteLine, 
-                new [] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
-                LogLevel.Information,
-                DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
-            )
-            ;
+            // .LogTo(Console.WriteLine, 
+            //     new [] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+            //     LogLevel.Information,
+            //     DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
+            // )
+            //.LogTo(_writer.WriteLine, LogLevel.Information);
+            .EnableDetailedErrors();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            //_writer.Dispose();
         }
 
     }
