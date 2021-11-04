@@ -15,10 +15,21 @@ namespace CursoEfAvancado
         static void Main(string[] args)
         {
             using var db = new ApplicationContext();
-            HabilitandoBatchSize();
+            TempoComandoGeral();
+            //HabilitandoBatchSize();
             //DadosSensiveis();
             //ConsultarDepartamentos();
         }
+
+        static void TempoComandoGeral()
+        {
+            using var db = new ApplicationContext();
+
+            db.Database.SetCommandTimeout(10);
+
+            db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07';SELECT 1");
+        }
+
 
         static void HabilitandoBatchSize()
         {
