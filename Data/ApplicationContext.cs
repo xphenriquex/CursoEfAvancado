@@ -17,21 +17,30 @@ namespace CursoEfAvancado.Data
         {
             const string strConnection="Data Source=localhost\\SQLEXPRESS;Database=DevIO-02;Integrated Security=true;pooling=true;";
             optionsBuilder
-            .UseSqlServer(
-                strConnection, 
-                    o=> o
-                        .MaxBatchSize(100)
-                        .CommandTimeout(5)
-                        .EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null))
+            .UseSqlServer(strConnection)
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
         }
 
-        public override void Dispose()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.Dispose();
-            //_writer.Dispose();
-        }
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AI");
+            //RAFAEL -> rafael
+            //Jõao -> Joao
 
+            modelBuilder.Entity<Departamento>().Property(p=>p.Descricao).UseCollation("SQL_Latin1_General_CP1_CS_AS");
+
+              modelBuilder
+                .HasSequence<int>("MinhaSequencia", "sequencias")
+                .StartsAt(1)
+                .IncrementsBy(2)
+                .HasMin(1)
+                .HasMax(10)
+                .IsCyclic();
+
+            modelBuilder.Entity<Departamento>().Property(p=>p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencias.MinhaSequencia");
+
+
+        }
     }
 }
