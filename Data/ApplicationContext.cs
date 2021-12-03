@@ -3,6 +3,7 @@ using System.IO;
 using CursoEfAvancado.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 
 namespace CursoEfAvancado.Data
@@ -50,11 +51,26 @@ namespace CursoEfAvancado.Data
                 .HasFillFactor(80)
                 .IsUnique();*/
 
-            modelBuilder.Entity<Estado>().HasData(new[] 
+            /*modelBuilder.Entity<Estado>().HasData(new[] 
             {
                 new Estado { Id = 1, Nome = "Sao Paulo"},
                 new Estado { Id = 2, Nome = "Sergipe"}
-            });
+            });*/
+
+            /*modelBuilder.HasDefaultSchema("cadastros"); 
+            modelBuilder.Entity<Estado>().ToTable("Estados", "SegundoEsquema");*/
+
+            var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
+
+            var conversao1 = new EnumToStringConverter<Versao>();
+
+            modelBuilder.Entity<Conversor>()
+                .Property(p => p.Versao)
+                .HasConversion(conversao1);
+            
+            //.HasConversion(conversao);
+            //.HasConversion(p=>p.ToString(), p=> (Versao)Enum.Parse(typeof(Versao), p));
+            //.HasConversion<string>();
 
         }
     }

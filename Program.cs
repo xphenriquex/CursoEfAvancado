@@ -17,7 +17,17 @@ namespace CursoEfAvancado
             using var db = new ApplicationContext();
             
             //Collations();
-            PropagarDados();
+            //PropagarDados();
+            Esquema();
+        }
+
+         static void Esquema()
+        {
+            using var db = new ApplicationContext();
+
+            var script = db.Database.GenerateCreateScript();
+
+            Console.WriteLine(script);
         }
 
         static void PropagarDados()
