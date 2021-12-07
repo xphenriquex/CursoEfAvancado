@@ -20,7 +20,8 @@ namespace CursoEfAvancado
             //PropagarDados();
             //Esquema();
             //ConversorDeValor();
-            ConversorCustomizado();
+            //ConversorCustomizado();
+            PropriedadesDeSombra();
         }
 
     
@@ -65,6 +66,13 @@ namespace CursoEfAvancado
         }
         
         static void Collations()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+        }
+
+        static void PropriedadesDeSombra()
         {
             using var db = new ApplicationContext();
             db.Database.EnsureDeleted();

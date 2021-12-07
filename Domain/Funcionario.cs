@@ -8,7 +8,7 @@ namespace CursoEfAvancado.Domain
         public string RG { get; set; }
         public bool Excluido { get; set; }
 
-        public int DepartamentoId { get; set; }
+        //public int DepartamentoId { get; set; }
         public virtual Departamento Departamento { get; set; }
     }
 }
