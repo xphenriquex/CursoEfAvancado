@@ -14,6 +14,7 @@ namespace CursoEfAvancado.Data
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Estado> Etados { get; set; }
         public DbSet<Conversor> Conversores { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -73,11 +74,20 @@ namespace CursoEfAvancado.Data
             //.HasConversion(p=>p.ToString(), p=> (Versao)Enum.Parse(typeof(Versao), p));
             //.HasConversion<string>();
 
-            // modelBuilder.Entity<Conversor>()
-            //     .Property(p => p.Status)
-            //     .HasConversion(new ConversorCustomizado());
+            /*modelBuilder.Entity<Conversor>()
+                .Property(p => p.Status)
+                .HasConversion(new ConversorCustomizado());*/
 
-            modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
+            //modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
+
+            modelBuilder.Entity<Cliente>(p => 
+            {
+                p.OwnsOne(x => x.Endereco, end => 
+                {
+                    end.Property(p => p.Bairro).HasColumnName("Bairro");
+                    end.ToTable("Enderecos");
+                });
+            });
 
         }
     }
