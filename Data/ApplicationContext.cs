@@ -73,9 +73,11 @@ namespace CursoEfAvancado.Data
             //.HasConversion(p=>p.ToString(), p=> (Versao)Enum.Parse(typeof(Versao), p));
             //.HasConversion<string>();
 
-            modelBuilder.Entity<Conversor>()
-                .Property(p => p.Status)
-                .HasConversion(new ConversorCustomizado());
+            // modelBuilder.Entity<Conversor>()
+            //     .Property(p => p.Status)
+            //     .HasConversion(new ConversorCustomizado());
+
+            modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
 
         }
     }
