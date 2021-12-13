@@ -17,6 +17,8 @@ namespace CursoEfAvancado.Data
         public DbSet<Conversor> Conversores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Ator> Atores { get; set; }
+        public DbSet<Filme> Filmes { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
