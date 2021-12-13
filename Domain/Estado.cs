@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CursoEfAvancado.Domain
 {
     public class Estado
@@ -5,7 +7,9 @@ namespace CursoEfAvancado.Domain
         public int Id { get; set; }
         public string Nome { get; set; }
 
-        public Governador Governador {get;set;}         
+        public Governador Governador {get;set;}      
+        public ICollection<Cidade> Cidades {get;} = new List<Cidade>();
+   
     }
 
     public class Governador
@@ -16,6 +20,15 @@ namespace CursoEfAvancado.Domain
         public string Partido { get; set; }
 
         public int EstadoReference {get;set;}
+        public Estado Estado {get;set;}
+    }
+
+    public class Cidade
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+
+        public int EstadoId {get;set;}
         public Estado Estado {get;set;}
     }
 
