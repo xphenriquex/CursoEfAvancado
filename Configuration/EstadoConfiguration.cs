@@ -12,6 +12,12 @@ namespace CursoEfAvancado.Configuration
             .HasForeignKey<Governador>(p => p.EstadoReference);
 
             builder.Navigation(p => p.Governador).AutoInclude();
+
+              builder
+                .HasMany(p=>p.Cidades)
+                .WithOne(p=>p.Estado)
+                //.IsRequired(false);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
