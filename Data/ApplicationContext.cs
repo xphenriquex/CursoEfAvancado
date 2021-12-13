@@ -16,6 +16,7 @@ namespace CursoEfAvancado.Data
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Conversor> Conversores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Cidade> Cidades { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
