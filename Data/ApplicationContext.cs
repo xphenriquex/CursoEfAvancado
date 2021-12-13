@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using CursoEfAvancado.Conversores;
 using CursoEfAvancado.Domain;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace CursoEfAvancado.Data
         //private readonly StreamWriter _writer = new StreamWriter("meu_log_do_ef_core.txt", append: true);
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
-        public DbSet<Estado> Etados { get; set; }
+        public DbSet<Estado> Estados { get; set; }
         public DbSet<Conversor> Conversores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
 
@@ -80,14 +81,9 @@ namespace CursoEfAvancado.Data
 
             //modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
 
-            modelBuilder.Entity<Cliente>(p => 
-            {
-                p.OwnsOne(x => x.Endereco, end => 
-                {
-                    end.Property(p => p.Bairro).HasColumnName("Bairro");
-                    end.ToTable("Enderecos");
-                });
-            });
+            //modelBuilder.ApplyConfiguration(new ClienteConfiguration());
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
 
         }
     }

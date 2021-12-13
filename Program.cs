@@ -23,7 +23,8 @@ namespace CursoEfAvancado
             //ConversorCustomizado();
             //PropriedadesDeSombra();
             //TrabalhandoComPropriedadesDeSombra();
-            TiposDePropriedades();
+            //TiposDePropriedades();
+            Relacionamento1Para1();
         }
 
     
@@ -81,7 +82,7 @@ namespace CursoEfAvancado
             db.Database.EnsureCreated();
         }
 
-         static void TrabalhandoComPropriedadesDeSombra()
+        static void TrabalhandoComPropriedadesDeSombra()
         {
             using var db = new ApplicationContext();
             /*db.Database.EnsureDeleted();
@@ -102,7 +103,7 @@ namespace CursoEfAvancado
             var departamentos = db.Departamentos.Where(p => EF.Property<DateTime>(p, "UltimaAtualizacao") < DateTime.Now).ToArray();
         }
 
-         static void TiposDePropriedades()
+        static void TiposDePropriedades()
         {
             using var db = new ApplicationContext();
             db.Database.EnsureDeleted();
@@ -128,6 +129,30 @@ namespace CursoEfAvancado
                 var json = System.Text.Json.JsonSerializer.Serialize(cli, options);
 
                 Console.WriteLine(json);
+            });
+        }
+
+        static void Relacionamento1Para1()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var estado = new Estado
+            {
+                Nome = "Sergipe",
+                Governador = new Governador { Nome = "Rafael Almeida" }
+            };
+
+            db.Estados.Add(estado);
+
+            db.SaveChanges();
+
+            var estados = db.Estados.AsNoTracking().ToList();
+
+            estados.ForEach(est =>
+            {
+                Console.WriteLine($"Estado: {est.Nome}, Governador: {est.Governador.Nome}");
             });
         }
     }
