@@ -22,7 +22,8 @@ namespace CursoEfAvancado
             //TiposDePropriedades();
             //Relacionamento1Para1();
             //Relacionamento1ParaMuitos();
-            RelacionamentoMuitosParaMuitos();
+            //RelacionamentoMuitosParaMuitos();
+            CampoDeApoio();
         }
 
     
@@ -230,6 +231,26 @@ namespace CursoEfAvancado
                     {
                         Console.WriteLine($"\tFilme: {filme.Descricao}");
                     }
+                }
+            }
+        }
+
+        static void CampoDeApoio()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var documento = new Documento();
+                documento.SetCPF("12345678933");
+
+                db.Documentos.Add(documento);
+                db.SaveChanges();
+
+                foreach (var doc in db.Documentos.AsNoTracking())
+                {
+                    Console.WriteLine($"CPF -> {doc.GetCPF()}");
                 }
             }
         }
