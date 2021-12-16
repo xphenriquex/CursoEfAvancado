@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using CursoEfAvancado.Conversores;
 using CursoEfAvancado.Domain;
@@ -23,6 +24,8 @@ namespace CursoEfAvancado.Data
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Instrutor> Instrutores { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -91,6 +94,19 @@ namespace CursoEfAvancado.Data
             //modelBuilder.ApplyConfiguration(new ClienteConfiguration());
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+
+             modelBuilder.SharedTypeEntity<Dictionary<string, object>>("Configuracoes", b =>
+            {
+                b.Property<int>("Id");
+
+                b.Property<string>("Chave")
+                    .HasColumnType("VARCHAR(40)")
+                    .IsRequired();
+
+                b.Property<string>("Valor")
+                    .HasColumnType("VARCHAR(255)")
+                    .IsRequired();
+            });
 
         }
     }
