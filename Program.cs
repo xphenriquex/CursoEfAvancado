@@ -332,9 +332,20 @@ namespace CursoEfAvancado
         {
             using (var db = new ApplicationContext())
             {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+                
                 var script = db.Database.GenerateCreateScript();
 
                 Console.WriteLine(script);
+
+                db.Atributos.Add(new Atributo
+                {
+                    Descricao = "Exemplo",
+                    Observacao = "Observacao"
+                });
+
+                db.SaveChanges();
             }
         }
     }
