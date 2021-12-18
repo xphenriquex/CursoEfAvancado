@@ -25,7 +25,8 @@ namespace CursoEfAvancado
             //Relacionamento1ParaMuitos();
             //RelacionamentoMuitosParaMuitos();
             //CampoDeApoio();
-            ExemploTPH();
+            //ExemploTPH();
+            Atributos();
         }
 
     
@@ -324,6 +325,16 @@ namespace CursoEfAvancado
                 {
                     Console.WriteLine($"Chave: {dic["Chave"]} - Valor: {dic["Valor"]}");
                 }
+            }
+        }
+
+        static void Atributos()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var script = db.Database.GenerateCreateScript();
+
+                Console.WriteLine(script);
             }
         }
     }
