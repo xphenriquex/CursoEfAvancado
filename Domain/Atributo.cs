@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace CursoEfAvancado.Domain
 {
     [Table("TabelaAtributos")]
+    [Index(nameof(Descricao), nameof(Id), IsUnique = true)]
+
     public class Atributo
     {
         [Key]
