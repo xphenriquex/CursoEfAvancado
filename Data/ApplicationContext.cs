@@ -18,9 +18,14 @@ namespace CursoEfAvancado.Data
             .EnableSensitiveDataLogging();
         }
 
-        [DbFunction(name: "LEFT", IsBuiltIn = true)]
-        public static string Left(string dados, int quantidade){
-            throw new NotImplementedException();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            Funcoes.MinhasFuncoes.RegistarFuncoes(modelBuilder);
         }
+
+        // [DbFunction(name: "LEFT", IsBuiltIn = true)]
+        // public static string Left(string dados, int quantidade){
+        //     throw new NotImplementedException();
+        // }
     }
 }

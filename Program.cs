@@ -23,7 +23,7 @@ namespace CursoEfAvancado
 
             using var db = new ApplicationContext(); 
 
-            var resultado = db.Livros.Select(p=> ApplicationContext.Left(p.Titulo, 10));
+            var resultado = db.Livros.Select(p=> Funcoes.MinhasFuncoes.Left(p.Titulo, 10));
             foreach(var parteTitulo in resultado)
             {
                 Console.WriteLine(parteTitulo);
