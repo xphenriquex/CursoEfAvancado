@@ -17,5 +17,10 @@ namespace CursoEfAvancado.Data
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
         }
+
+        [DbFunction(name: "LEFT", IsBuiltIn = true)]
+        public static string Left(string dados, int quantidade){
+            throw new NotImplementedException();
+        }
     }
 }
