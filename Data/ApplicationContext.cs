@@ -7,7 +7,7 @@ namespace CursoEfAvancado.Data
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Funcao> Funcoes {get;set;}
+        public DbSet<Livro> Livros {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -15,19 +15,7 @@ namespace CursoEfAvancado.Data
             optionsBuilder
             .UseSqlServer(strConnection)
             .LogTo(Console.WriteLine, LogLevel.Information)
-            .EnableSensitiveDataLogging()
-            .AddInterceptors(new Interceptadores.InterceptadorDeComandos());
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<Funcao>(conf=>
-                {
-                    conf.Property<string>("PropriedadeSombra")
-                        .HasColumnType("VARCHAR(100)")
-                        .HasDefaultValueSql("'Teste'");
-                });
+            .EnableSensitiveDataLogging();
         }
     }
 }
