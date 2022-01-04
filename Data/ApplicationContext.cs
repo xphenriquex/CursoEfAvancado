@@ -1,18 +1,13 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using CursoEfAvancado.Domain;
-using CursoEfAvancado.Funcoes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.Extensions.Logging;
 
 namespace CursoEfAvancado.Data
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Departamento> Departamentos {get;set;}
-        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Pessoa> pessoa {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,6 +16,15 @@ namespace CursoEfAvancado.Data
             .UseSqlServer(strConnection)
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
+        }
+
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pessoa>(conf=> 
+            {
+                conf.HasKey(p=>p.Id);
+                conf.Property(p=>p.Nome).HasMaxLength(60).IsUnicode(false);
+            });
         }
     }
 }
