@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using src.Data;
 using src.Domain;
+using src.Middlewares;
+using src.Provider;
 
 namespace EFCore.Multitenant
 {
@@ -29,7 +31,7 @@ namespace EFCore.Multitenant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<TenantData>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -59,6 +61,8 @@ namespace EFCore.Multitenant
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<TenantMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
