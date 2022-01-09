@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using src.Data;
 using src.Data.Interceptors;
 using src.Data.ModelFactory;
 using src.Domain;
+using src.Extensions;
 using src.Middlewares;
 using src.Provider;
 
@@ -43,13 +45,15 @@ namespace EFCore.Multitenant
 
             services.AddScoped<StrategySchemaInterceptor>();
 
+            // Estrategia 1 - Identificador na tabela
             /*services.AddDbContext<ApplicationContext>(p => p
                 .UseSqlServer("Data Source=localhost\\SQLEXPRESS;Database=tenant99;Integrated Security=true;pooling=true;")
                 .LogTo(Console.WriteLine)
                 .EnableSensitiveDataLogging());
                 */
-                
-            services.AddDbContext<ApplicationContext>((provider,options)=>
+
+            // Estrategia 2 - Schema
+            /*services.AddDbContext<ApplicationContext>((provider,options)=>
             {
                 options
                     .UseSqlServer("Data Source=localhost\\SQLEXPRESS;Database=tenant;Integrated Security=true;pooling=true;")
@@ -59,6 +63,27 @@ namespace EFCore.Multitenant
 
                 // var interceptor = provider.GetRequiredService<StrategySchemaInterceptor>();
                 // options.AddInterceptors(interceptor);
+            });*/
+
+            // Estrategia 3 - Banco de dados
+            services.AddHttpContextAccessor();
+            
+            services.AddScoped<ApplicationContext>(provider => 
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+
+                var httpContext = provider.GetService<IHttpContextAccessor>()?.HttpContext;
+                var tenantId = httpContext?.GetTenantId();
+
+                //var connectionString = Configuration.GetConnectionString(tenantId);
+                var connectionString = Configuration.GetConnectionString("custom").Replace("_DATABASE_", tenantId);
+
+                optionsBuilder
+                    .UseSqlServer(connectionString)
+                    .LogTo(Console.WriteLine)
+                    .EnableSensitiveDataLogging();
+
+                return new ApplicationContext(optionsBuilder.Options);
             });
         }
 
@@ -80,7 +105,7 @@ namespace EFCore.Multitenant
 
             app.UseAuthorization();
 
-            app.UseMiddleware<TenantMiddleware>();
+            //app.UseMiddleware<TenantMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

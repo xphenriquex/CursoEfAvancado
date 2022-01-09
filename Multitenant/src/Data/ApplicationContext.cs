@@ -8,17 +8,17 @@ namespace src.Data
     {
         public DbSet<Person> People { get; set; }
         public DbSet<Product> Products { get; set; }
-        public readonly TenantData TenantData;
+        //public readonly TenantData TenantData;
 
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options,  TenantData tenantData) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options /*, TenantData tenantData*/) : base(options)
         {
-            TenantData = tenantData;
+            //TenantData = tenantData;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema(TenantData.TenantId);
+            //modelBuilder.HasDefaultSchema(TenantData.TenantId);
 
             modelBuilder.Entity<Person>().HasData(
                 new Person { Id = 1, Name = "Person 1", TenantId = "tenant-1"},
