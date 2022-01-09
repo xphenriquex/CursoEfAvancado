@@ -8,17 +8,17 @@ namespace src.Data
     {
         public DbSet<Person> People { get; set; }
         public DbSet<Product> Products { get; set; }
-        public readonly TenantData _tenantData;
+        public readonly TenantData TenantData;
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options,  TenantData tenantData) : base(options)
         {
-            _tenantData = tenantData;
+            TenantData = tenantData;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.HasDefaultSchema(TenantData.TenantId);
+            modelBuilder.HasDefaultSchema(TenantData.TenantId);
 
             modelBuilder.Entity<Person>().HasData(
                 new Person { Id = 1, Name = "Person 1", TenantId = "tenant-1"},
@@ -30,8 +30,8 @@ namespace src.Data
                 new Product { Id = 2, Description = "Description 2", TenantId = "tenant-2"},
                 new Product { Id = 3, Description = "Description 3", TenantId = "tenant-2"});
 
-            modelBuilder.Entity<Person>().HasQueryFilter(p=>p.TenantId == _tenantData.TenantId);
-            modelBuilder.Entity<Product>().HasQueryFilter(p=>p.TenantId == _tenantData.TenantId);
+            // modelBuilder.Entity<Person>().HasQueryFilter(p=>p.TenantId == TenantData.TenantId);
+            // modelBuilder.Entity<Product>().HasQueryFilter(p=>p.TenantId == TenantData.TenantId);
         }
     }
 }
