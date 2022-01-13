@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using src.Data.Repositories;
+using src.Domain;
 
 namespace EFCore.UowRepository.Controllers
 {
@@ -22,12 +23,22 @@ namespace EFCore.UowRepository.Controllers
             _departamentoRepository = departamentoRepository;
         }
 
-        [HttpGet]
         //departamento/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id/*,[FromServices]IDepartamentoRepository repository*/)
         {
             var departamento = await _departamentoRepository.GetByIdAsync(id);
+            return Ok(departamento);
+        }
+
+        //departamento
+        [HttpPost]
+        public IActionResult CreateDepartamento(Departamento departamento)
+        {
+            _departamentoRepository.Add(departamento);
+
+            var saved = _departamentoRepository.Save();
+            
             return Ok(departamento);
         }
     }
