@@ -44,6 +44,7 @@ namespace EFCore.UowRepository
                 .EnableSensitiveDataLogging());
 
             services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

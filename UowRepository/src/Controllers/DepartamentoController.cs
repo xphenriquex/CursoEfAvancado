@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using src.Data;
 using src.Data.Repositories;
 using src.Domain;
 
@@ -15,19 +16,25 @@ namespace EFCore.UowRepository.Controllers
     {
 
         private readonly ILogger<DepartamentoController> _logger;
-        private readonly IDepartamentoRepository _departamentoRepository;
+        // private readonly IDepartamentoRepository _departamentoRepository;
+        private readonly IUnitOfWork _uow;
 
-        public DepartamentoController(ILogger<DepartamentoController> logger, IDepartamentoRepository departamentoRepository)
+
+        public DepartamentoController(
+            ILogger<DepartamentoController> logger, 
+            // IDepartamentoRepository departamentoRepository,
+            IUnitOfWork uow)
         {
             _logger = logger;
-            _departamentoRepository = departamentoRepository;
+            // _departamentoRepository = departamentoRepository;
+            _uow = uow;
         }
 
         //departamento/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id/*,[FromServices]IDepartamentoRepository repository*/)
         {
-            var departamento = await _departamentoRepository.GetByIdAsync(id);
+            var departamento = await _uow.DepartamentoRepository.GetByIdAsync(id);
             return Ok(departamento);
         }
 
@@ -35,9 +42,11 @@ namespace EFCore.UowRepository.Controllers
         [HttpPost]
         public IActionResult CreateDepartamento(Departamento departamento)
         {
-            _departamentoRepository.Add(departamento);
+            _uow.DepartamentoRepository.Add(departamento);
 
-            var saved = _departamentoRepository.Save();
+            //var saved = _departamentoRepository.Save();
+
+            _uow.Commit();
             
             return Ok(departamento);
         }
