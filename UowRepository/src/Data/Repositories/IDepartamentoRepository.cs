@@ -1,14 +1,15 @@
 
 
 using System.Threading.Tasks;
+using src.Data.Base;
 using src.Domain;
 
 namespace src.Data.Repositories
 {
-    public interface IDepartamentoRepository
+    public interface IDepartamentoRepository : IGenericRepository<Departamento>
     {
-        Task<Departamento> GetByIdAsync(int id); 
-        void Add(Departamento departamento);
-        bool Save();
+        //Task<Departamento> GetByIdAsync(int id); 
+        //void Add(Departamento departamento);
+        //bool Save();
     }
 }

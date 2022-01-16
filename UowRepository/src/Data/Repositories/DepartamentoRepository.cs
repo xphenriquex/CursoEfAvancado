@@ -2,20 +2,24 @@
 
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using src.Data.Base;
 using src.Domain;
 
 namespace src.Data.Repositories
 {
-    public class DepartamentoRepository : IDepartamentoRepository
+    public class DepartamentoRepository : GenericRepository<Departamento>, IDepartamentoRepository
     {
         private readonly ApplicationContext _context;
         private readonly DbSet<Departamento> _dbSet;
         
-        public DepartamentoRepository(ApplicationContext context)
+        
+        public DepartamentoRepository(ApplicationContext context) : base(context)
         {
-            _context = context;
-            _dbSet = _context.Set<Departamento>();
+            // _context = context;
+            // _dbSet = _context.Set<Departamento>();
         }
+
+        /*
         public void Add(Departamento departamento)
         {
             _dbSet.Add(departamento);
@@ -32,5 +36,6 @@ namespace src.Data.Repositories
         {
             return _context.SaveChanges() > 0;
         }
+        */
     }
 }

@@ -42,10 +42,24 @@ namespace EFCore.UowRepository.Controllers
         [HttpPost]
         public IActionResult CreateDepartamento(Departamento departamento)
         {
-            _uow.DepartamentoRepository.Add(departamento);
+            //_departamentoRepository.Add(departamento);
 
             //var saved = _departamentoRepository.Save();
+            _uow.DepartamentoRepository.Add(departamento);
 
+            _uow.Commit();
+            
+            return Ok(departamento);
+        }
+
+        //departamento/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveDepartamentoAsync(int id)
+        {
+            var departamento = await _uow.DepartamentoRepository.GetByIdAsync(id);
+           
+            _uow.DepartamentoRepository.Remove(departamento);
+            
             _uow.Commit();
             
             return Ok(departamento);
